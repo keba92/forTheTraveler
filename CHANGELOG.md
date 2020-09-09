@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.2] - 2020-09-09
+### Changed
+
+- Fixed bug in link to Netlify, in file README.md.
+
 ## [0.0.1] - 2020-09-09
 ### Added
 

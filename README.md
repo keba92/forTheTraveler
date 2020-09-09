@@ -1,5 +1,5 @@
 # forTheTraveler
 SPA to help the traveler. Contains minimum country data. (final project for IT-Academy)
 
-
-Link : [Netlify](forthetraveler.netlify.app)
+v0.0.2
+Link : [Netlify](https://forthetraveler.netlify.app/)
