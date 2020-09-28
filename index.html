@@ -1,22 +1,92 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web application for the Traveler</title>
-    <style>
-         #tmpDiv{
-            margin: 0 auto;
-            text-align: center;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Currency</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://code.highcharts.com/highcharts.js"></script>
 </head>
 <body>
 
-    <div id="tmpDiv">
-        <h2 id="title">Everything will appear here soon ..</h2><br/>
-        <img src="https://cs11.pikabu.ru/post_img/2019/07/30/9/1564500202124272061.jpg" alt="">
-    </div>
+  <nav>
+    <ul class="menu">
+      <li><a id="main" href="#">Главная страница</a></li>
+      <li><a id="cur" href="#">Список курсов валют</a></li>
+      <li><a id="convers" href="#">Конвертер валют</a></li>
+      <li><a id="analiz" href="#">Анализ валют</a></li>
+    </ul>
+  </nav>
+
+<div id="content">
+
+  <!--Список курсов валют-->
+  <div id="listCur">
+    <h1>Cписок курсов валют</h1><br/>
+    <span id="dateList">Выберите дату: <input type="date" id="dateCur" required>
+      <button id="btnCur" onclick="getDataCur()">Показать</button>
+    </span>
+    <div id="tableCur">
+      <table id="table" align="center"></table>
+    </div> 
+  </div>
+
+  <!--Конвертер валют-->
+  <div id="convert">
+    <h1>Конвертер валют</h1><br/>
+    <table id="convertTable" align="center">
+      <tr>
+        <th>ОБМЕН С</th>
+        <th>ОБМЕН В</th>
+        <th>Сумма обмена</th>
+      </tr>
+      <tr>
+        <td><select name="from" id="from"  data-remote="true"></select></td>
+        <td><select name="to" id="to" data-remote="true"></select></td>
+        <td><input type="number" min = "0" id="summa" onchange="dataForCalculate()" width="100px"></td>
+      </tr>
+      <tr>
+        <td colspan="3">Итого: <input type="mumber" id="itogo" disabled></td>
+      </tr>
+    </table>
+  </div>
    
+  <!--Анализ вылют-->
+  <div id="analizCur">
+    <h1>Конвертер валют</h1><br/>
+    <div id="choise" align = "center">
+      <p>Валюта: 
+          <select class = "curent" name="curent" id="curent" data-remote="true">
+          </select>
+          <button>Показать</button><br/>
+      </p>
+      <p class="choiseMounth">Выберите месяц:
+          <select name="mounth" id="mounth">
+              <option class="mounth" value="1">Январь</option>
+              <option class="mounth" value="2">Февраль</option>
+              <option class="mounth" value="3">Март</option>
+              <option class="mounth" value="4">Апрель</option>
+              <option class="mounth" value="5">Май</option>
+              <option class="mounth" value="6">Июнь</option>
+              <option class="mounth" value="7">Июль</option>
+              <option class="mounth" value="8">Август</option>
+              <option class="mounth" value="9">Сентябрь</option>
+              <option class="mounth" value="10">Октябрь</option>
+              <option class="mounth" value="11">Ноябрь</option>
+              <option class="mounth" value="12">Декабрь</option>
+          </select>
+      </p>
+  </div>
+  <figure class="highcharts-figure">
+  <div id="container"></div>
+  </figure>
+  </div>
+
+</div>
+
+  <script src="./js/curent.js"></script>
+  <script src="./js/convert.js"></script>
+  <script src="./js/worker.js"></script>
+  <script src="./js/main.js"></script>
+  
 </body>
 </html>
