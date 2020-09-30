@@ -5,12 +5,12 @@ function startConvert (){
     myWorker.postMessage(JSON.stringify('1'))
     myWorker.onmessage= function(e){
         const data = JSON.parse(e.data);
-        createOptions(data,selectS);
-        createOptions(data,selectV);
+        createOptionsConvert(data,selectS);
+        createOptionsConvert(data,selectV);
     } 
 }
 
-function createOptions(optData,select){
+function createOptionsConvert(optData,select){
     optData.map(el=>{
         const option = document.createElement('option');
         option.text = el['Cur_Name'];

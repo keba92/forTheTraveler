@@ -5,15 +5,16 @@
   <title>Currency</title>
   <link rel="stylesheet" href="/css/style.css">
   <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/data.js"></script>
 </head>
 <body>
 
   <nav>
     <ul class="menu">
-      <li><a id="main" href="#">Главная страница</a></li>
-      <li><a id="cur" href="#">Список курсов валют</a></li>
-      <li><a id="convers" href="#">Конвертер валют</a></li>
-      <li><a id="analiz" href="#">Анализ валют</a></li>
+      <li><a id="main" href="#main" default>Главная страница</a></li>
+      <li><a id="cur" href="#cur">Список курсов валют</a></li>
+      <li><a id="convers" href="#convers">Конвертер валют</a></li>
+      <li><a id="analiz" href="#analiz">Анализ валют</a></li>
     </ul>
   </nav>
 
@@ -52,32 +53,17 @@
    
   <!--Анализ вылют-->
   <div id="analizCur">
-    <h1>Конвертер валют</h1><br/>
+    <h1>Анализ валют</h1><br/>
     <div id="choise" align = "center">
-      <p>Валюта: 
-          <select class = "curent" name="curent" id="curent" data-remote="true">
-          </select>
-          <button>Показать</button><br/>
-      </p>
-      <p class="choiseMounth">Выберите месяц:
-          <select name="mounth" id="mounth">
-              <option class="mounth" value="1">Январь</option>
-              <option class="mounth" value="2">Февраль</option>
-              <option class="mounth" value="3">Март</option>
-              <option class="mounth" value="4">Апрель</option>
-              <option class="mounth" value="5">Май</option>
-              <option class="mounth" value="6">Июнь</option>
-              <option class="mounth" value="7">Июль</option>
-              <option class="mounth" value="8">Август</option>
-              <option class="mounth" value="9">Сентябрь</option>
-              <option class="mounth" value="10">Октябрь</option>
-              <option class="mounth" value="11">Ноябрь</option>
-              <option class="mounth" value="12">Декабрь</option>
-          </select>
-      </p>
-  </div>
+      <h4 class="choiseMounth">Выберите валюту: </h4>
+          <p><select name="current" id="choiseCur" data-remote="true"></select></p>
+      <h4 class="choiseMounth">Выберите период: </h4>
+          <p>Начало: <input type="date" id="startDate">
+             Конец: <input type="date" id="endDate"> 
+            <button onclick="showAnaliz()">Показать</button></p>
+    </div>
   <figure class="highcharts-figure">
-  <div id="container"></div>
+    <div id="container"></div>
   </figure>
   </div>
 
@@ -87,6 +73,8 @@
   <script src="./js/convert.js"></script>
   <script src="./js/worker.js"></script>
   <script src="./js/main.js"></script>
+  <script src="./js/analizCur.js"></script>
+  <script src="./js/charts.js"></script>
   
 </body>
 </html>
