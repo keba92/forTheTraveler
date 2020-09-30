@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2020-09-30
+### Added
+
+- File analizCur.js, allows you to analyze the change in the exchange rate for a selected period of time.
+- File charts.js, allows you to visualize graphs of currency changes.
+
+### Changed
+
+- Added the analiz block to index.html and included the highcharts.com library.
+- Added classes to style.css for visualizing charts.
+- Added the ability to get worker.js data using two urls.
+
 ## [0.1.0] - 2020-09-28
 ### Added
 

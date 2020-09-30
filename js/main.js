@@ -4,9 +4,6 @@ const analiz = document.querySelector('#analizCur');
  
  document.querySelector('.menu').addEventListener('click', e =>{
     switch (e.target.id){
-        case 'main':
-            console.log('main');
-            break;
         case 'cur':
             analiz.style.display = 'none';
             convert.style.display = 'none';
@@ -23,6 +20,13 @@ const analiz = document.querySelector('#analizCur');
             convert.style.display = 'none';
             listCur.style.display = 'none';
             analiz.style.display = 'block';
+            startAnalizCur();
+            break;
+        case 'main':
+            convert.style.display = 'none';
+            listCur.style.display = 'none'; 
+            analiz.style.display = 'none';
+            console.log('main');
             break;
     }
  });
