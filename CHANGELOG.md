@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2020-10-07
+
+### Changed
+
+- Fixed a bug with drawing graphs of currency changes.
+
 ## [0.3.0] - 2020-10-07
 ### Added
 

@@ -1,7 +1,7 @@
 # forTheTraveler
 SPA to with information about currencies. (final project for IT-Academy)
 
-v.0.3.0
+v.0.3.1
 This version of the product allows:
 - In the "List of exchange rates" tab, view data on the exchange rates for the date you selected.
 - In the "Currency Converter" tab, convert the selected currency with the entered amount into any other currency of your choice.

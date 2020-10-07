@@ -3,7 +3,7 @@ onmessage = function(e){
     const check = JSON.parse(e.data);
     const urlDate = `https://www.nbrb.by/api/exrates/rates?ondate=${check}&periodicity=0`;
     const urlPeriod = `https://www.nbrb.by/API/ExRates/Rates/Dynamics/${objId[check.current]}?startDate=${check.start}&endDate=${check.end}`;
-    if (check=="1"|| !Array.isArray(check)){
+    if (typeof(check)=="string"){
         fetchData(urlDate);
     } else {
         fetchData(urlPeriod);
@@ -11,6 +11,7 @@ onmessage = function(e){
 }
 
 function fetchData(url){
+    console.log(url)
     fetch(url)
         .then(response=>response.json())
         .then(data=>{
