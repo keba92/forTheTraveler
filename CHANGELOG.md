@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2020-10-07
+### Added
+
+- Added "Main page" tab;
+
+### Changed
+
+- Сhanged the style of the navigation menu.
+- The request to the worker is formed as an object.
+- Changed currency conversion table.
+
 ## [0.2.0] - 2020-09-30
 ### Added
 

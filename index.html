@@ -3,34 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <title>Currency</title>
-  <link rel="stylesheet" href="/css/style.css">
   <script src="https://code.highcharts.com/highcharts.js"></script>
   <script src="https://code.highcharts.com/modules/data.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-
+  
   <nav>
     <ul class="menu">
-      <li><a id="main" href="#main" default>Главная страница</a></li>
-      <li><a id="cur" href="#cur">Список курсов валют</a></li>
-      <li><a id="convers" href="#convers">Конвертер валют</a></li>
-      <li><a id="analiz" href="#analiz">Анализ валют</a></li>
+      <li><a id="main" name="mainPage" href="#mainPage" default>Главная страница</a></li>
+      <li><a id="cur" name="listCur" href="#listCur">Список курсов валют</a></li>
+      <li><a id="convers" name="convert" href="#convert">Конвертер валют</a></li>
+      <li><a id="analiz" name="analizCur" href="#analizCur">Анализ валют</a></li>
     </ul>
   </nav>
 
 <div id="content">
-
   <!--Список курсов валют-->
   <div id="listCur">
     <h1>Cписок курсов валют</h1><br/>
     <span id="dateList">Выберите дату: <input type="date" id="dateCur" required>
-      <button id="btnCur" onclick="getDataCur()">Показать</button>
+      <button id="btnCur" class="btn btn-info" onclick="getDataCur()">Показать</button>
     </span>
     <div id="tableCur">
       <table id="table" align="center"></table>
     </div> 
   </div>
-
   <!--Конвертер валют-->
   <div id="convert">
     <h1>Конвертер валют</h1><br/>
@@ -38,21 +37,19 @@
       <tr>
         <th>ОБМЕН С</th>
         <th>ОБМЕН В</th>
-        <th>Сумма обмена</th>
       </tr>
       <tr>
         <td><select name="from" id="from"  data-remote="true"></select></td>
         <td><select name="to" id="to" data-remote="true"></select></td>
-        <td><input type="number" min = "0" id="summa" onchange="dataForCalculate()" width="100px"></td>
       </tr>
       <tr>
-        <td colspan="3">Итого: <input type="mumber" id="itogo" disabled></td>
+        <td>Сумма обмена: <input type="number" min = "0" id="summa" onchange="dataForCalculate()" width="100px"></td>
+        <td>Итого: <input type="mumber" id="itogo" disabled></td>
       </tr>
     </table>
   </div>
-   
   <!--Анализ вылют-->
-  <div id="analizCur">
+  <div class="pageCont" id="analizCur">
     <h1>Анализ валют</h1><br/>
     <div id="choise" align = "center">
       <h4 class="choiseMounth">Выберите валюту: </h4>
@@ -60,13 +57,21 @@
       <h4 class="choiseMounth">Выберите период: </h4>
           <p>Начало: <input type="date" id="startDate">
              Конец: <input type="date" id="endDate"> 
-            <button onclick="showAnaliz()">Показать</button></p>
+          <button class="btn btn-info" onclick="showAnaliz()">Показать</button></p>
     </div>
   <figure class="highcharts-figure">
     <div id="container"></div>
   </figure>
   </div>
-
+  <!--Главная страница-->
+  <div  class="pageCont" id="mainPage">
+    <h1>Главная страница</h1><br/>
+    <div id="content_main">
+      Данное SPA является итоговым проетом IT-Academy по курсу "Веб приложение на Javascript". <br>
+      Данные о курсах валют получаются от API "Национального банка Республики Беларусь" (nbrb.by). <br>
+      Запросы к API осуществляются с помощью Worker. Тем самым производим разграничение Back-End и Front-End. <br>
+    </div>
+  </div>
 </div>
 
   <script src="./js/curent.js"></script>
