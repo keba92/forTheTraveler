@@ -126,6 +126,6 @@ select, input{
   display: none;
 }
 
-.active{
+#mainPage{
   display: block;
 }

@@ -11,22 +11,23 @@ onmessage = function(e){
 }
 
 function fetchData(url){
-    console.log(url)
     fetch(url)
-        .then(response=>response.json())
-        .then(data=>{
-            const arr = [];
-            data.forEach(el=>{
-                const obj = {
-                    'Cur_Abbreviation' : el['Cur_Abbreviation'], 
-                    'Cur_Name' : el['Cur_Name'],
-                    'Cur_Scale' : el['Cur_Scale'],
-                    'Cur_OfficialRate': el['Cur_OfficialRate']
-                }
-                arr.push(obj);
-                objId[el['Cur_Abbreviation']] = el['Cur_ID'];
-            })
-            return postMessage(JSON.stringify(arr));
-        })
+        .then(response=> response.json())
+        .then(data=> postMessage( JSON.stringify( dataPreparation(data) ) ))
         .catch((error) =>console.log(error))
+}
+
+function dataPreparation (data){
+    const arr = [];
+        data.forEach(el=>{
+            const obj = {
+                'Cur_Abbreviation' : el['Cur_Abbreviation'], 
+                'Cur_Name' : el['Cur_Name'],
+                'Cur_Scale' : el['Cur_Scale'],
+                'Cur_OfficialRate': el['Cur_OfficialRate']
+            }
+            arr.push(obj);
+            objId[el['Cur_Abbreviation']] = el['Cur_ID'];
+        })
+    return arr;
 }

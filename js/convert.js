@@ -2,12 +2,14 @@ const selectS = document.querySelector('#from');
 const selectV = document.querySelector('#to');
 
 function startConvert (){
-    myWorker.postMessage(JSON.stringify('1'))
-    myWorker.onmessage= function(e){
-        const data = JSON.parse(e.data);
-        createOptionsConvert(data,selectS);
-        createOptionsConvert(data,selectV);
-    } 
+    if(selectS.value == ''|| selectV == ''){
+        myWorker.postMessage(JSON.stringify('get_data'))
+        myWorker.onmessage= function(e){
+            const data = JSON.parse(e.data);
+            createOptionsConvert(data,selectS);
+            createOptionsConvert(data,selectV);
+        } 
+    }
 }
 
 function createOptionsConvert(optData,select){
@@ -23,7 +25,7 @@ function dataForCalculate(){
     const inputSum = document.querySelector('#summa').value;
     const inputItogo = document.querySelector('#itogo');
     if(inputSum){
-        myWorker.postMessage(JSON.stringify('1'))
+        myWorker.postMessage(JSON.stringify('get_data'))
         myWorker.onmessage= function(e){
             const data = JSON.parse(e.data);
             let val1, val2;

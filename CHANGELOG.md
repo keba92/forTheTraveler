@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.2] - 2020-10-09
+
+- Moved "then" to a separate function in "worker.js".
+- In "main.js" the tab switching function has been changed.
+- In "analizCur.js" functions have been changed to avoid creating additional context.
+
+### Changed
+
+- Fixed a bug with drawing graphs of currency changes.
+
 ## [0.3.1] - 2020-10-07
 
 ### Changed
