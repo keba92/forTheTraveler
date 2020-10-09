@@ -1,17 +1,27 @@
 const selectAnaliz = document.querySelector('#choiseCur');
 const startDate = document.querySelector('#startDate');
 const endDate = document.querySelector('#endDate');
+const divAnaliz = document.querySelector('#choise');
 function startAnalizCur(){
+    divAnaliz.classList.add('loaded_hiding');
     myWorker.postMessage(JSON.stringify('1'))
     myWorker.onmessage= function(e){
         const data = JSON.parse(e.data);
+        if(data){
+            divAnaliz.classList.add('loaded');
+            divAnaliz.classList.remove('loaded_hiding');
+        }
         createOptionsConvert(data,selectAnaliz);
     } 
 }
 
 function showAnaliz(){
     const arrCur = [];
-    const objDate = [selectAnaliz.value,startDate.value,endDate.value]
+    const objDate = {
+        current : selectAnaliz.value, 
+        start: startDate.value,
+        end:endDate.value
+    }
     myWorker.postMessage(JSON.stringify(objDate))
     myWorker.onmessage = function(e){
         const dateArr = datesInRange(new Date(startDate.value), new Date(endDate.value));
