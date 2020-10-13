@@ -5,6 +5,10 @@ function createGraf(data){
         title: {
             text: `Изменение курса`
         },
+
+        subtitle: {
+            text: 'Источник: Национальный банк Республики Беларусь'
+        },
     
         yAxis: {
             title: {
@@ -13,8 +17,9 @@ function createGraf(data){
         },
     
         xAxis: {
-            title: {
-                text: 'Дата'
+            categories: data[0],
+            labels: {
+                rotation: -45
             }
         },
     
@@ -34,7 +39,7 @@ function createGraf(data){
     
         series: [{
             name: selectAnaliz.value,
-            data: data
+            data: data[1]
         }],
     
         responsive: {

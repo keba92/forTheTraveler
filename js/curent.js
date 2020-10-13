@@ -14,7 +14,7 @@ function getDataCur(){
         } 
     }else{
         getDate()
-        myWorker.postMessage(JSON.stringify('1'))
+        myWorker.postMessage(JSON.stringify('get_data'))
         myWorker.onmessage= function(e){
            generateTable(JSON.parse(e.data));
         }
