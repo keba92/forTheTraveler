@@ -1,22 +1,24 @@
-const myWorker = new Worker('./js/worker.js');
-const table = document.querySelector('#table');
-const date = document.querySelector('#dateCur');
-
 function getDate(){
+    const today = new Date().toISOString().split('T')[0];
+    date.setAttribute('max', today)
     return date.valueAsDate = new Date();
 }
 
 function getDataCur(){
     if (date.value != ''){
+        spinnerPage.render()
         myWorker.postMessage(JSON.stringify(date.value))
         myWorker.onmessage= function(e){
            changeGenerateTable(JSON.parse(e.data));
+           spinnerPage.handleClear()
         } 
     }else{
+        spinnerPage.render()
         getDate()
         myWorker.postMessage(JSON.stringify('get_data'))
         myWorker.onmessage= function(e){
            generateTable(JSON.parse(e.data));
+           spinnerPage.handleClear()
         }
     }
 }
@@ -30,6 +32,7 @@ function startCurTable (){
 
 function generateTableHead() {
     const thead = table.createTHead();
+    thead.classList.add('thead-dark')
     const row = thead.insertRow();
     const thName = ['Аббревиатура валюты','Наименование валюты','Количество единиц иностранной валюты', 'Установленый курс валют, руб.']
     thName.forEach(el => {

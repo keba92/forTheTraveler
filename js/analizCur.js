@@ -1,14 +1,22 @@
-const selectAnaliz = document.querySelector('#choiseCur');
-const startDate = document.querySelector('#startDate');
-const endDate = document.querySelector('#endDate');
+function pickMaxDate(){
+    startDate.setAttribute('max', new Date(endDate.value).toISOString().split('T')[0]);
+}
+function pickMinDate(){
+    endDate.setAttribute('min', new Date(startDate.value).toISOString().split('T')[0])
+}
+    
 function startAnalizCur(){
     if (selectAnaliz.value == ''){
+        spinnerPage.render()
         myWorker.postMessage(JSON.stringify('get_data'))
         myWorker.onmessage= function(e){
             const data = JSON.parse(e.data);
             createOptionsConvert(data,selectAnaliz);
+            spinnerPage.handleClear()
         } 
     }
+    startDate.setAttribute('max', today);
+    endDate.setAttribute('max', today);
 }
 
 function showAnaliz(){
