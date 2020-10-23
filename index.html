@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Currency</title>
+  <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
   <script src="https://code.highcharts.com/highcharts.js"></script>
   <script src="https://code.highcharts.com/modules/exporting.js"></script>
   <script src="https://code.highcharts.com/modules/export-data.js"></script>
@@ -13,7 +14,7 @@
 </head>
 <body>
   
-  <nav>
+  <nav class="navbar navbar-dark bg-primary">
     <ul class="menu">
       <li><a id="main" name="mainPage" href="#mainPage" default>Главная страница</a></li>
       <li><a id="cur" name="listCur" href="#listCur">Список курсов валют</a></li>
@@ -22,45 +23,49 @@
     </ul>
   </nav>
 
+<div class="spinner"></div>
+
 <div id="content">
   <!--Список курсов валют-->
-  <div id="listCur">
+  <div id="listCur" class="foo">
     <h1>Cписок курсов валют</h1><br/>
-    <span id="dateList">Выберите дату: <input type="date" id="dateCur" required>
-      <button id="btnCur" class="btn btn-info" onclick="getDataCur()">Показать</button>
+    <span id="dateList">Выберите дату: <input type="date" class="form-control" id="dateCur" required>
+      <button id="btnCur" class="btn btn-primary" onclick="getDataCur()">Показать</button>
     </span>
     <div id="tableCur">
-      <table id="table" align="center"></table>
+      <table id="table" class="table" align="center"></table>
     </div> 
   </div>
   <!--Конвертер валют-->
-  <div id="convert">
+  <div id="convert" class="foo">
     <h1>Конвертер валют</h1><br/>
-    <table id="convertTable" align="center">
+    <table id="convertTable" class="table" align="center">
+      <thead class="thead-dark">
+        <tr>
+          <th>ОБМЕН С</th>
+          <th>ОБМЕН В</th>
+        </tr>
+      </thead>
       <tr>
-        <th>ОБМЕН С</th>
-        <th>ОБМЕН В</th>
+        <td><select class="custom-select" name="from" id="from"  data-remote="true"></select></td>
+        <td><select class="custom-select" name="to" id="to" data-remote="true"></select></td>
       </tr>
       <tr>
-        <td><select name="from" id="from"  data-remote="true"></select></td>
-        <td><select name="to" id="to" data-remote="true"></select></td>
-      </tr>
-      <tr>
-        <td>Сумма обмена: <input type="number" min = "0" id="summa" onchange="dataForCalculate()" width="100px"></td>
-        <td>Итого: <input type="mumber" id="itogo" disabled></td>
+        <td>Сумма обмена: <input type="number" class="form-control" min = "0" id="summa" oninput="dataForCalculate()" width="100px"></td>
+        <td>Итого: <input type="mumber" class="form-control" id="itogo" disabled></td>
       </tr>
     </table>
   </div>
   <!--Анализ вылют-->
-  <div class="pageCont" id="analizCur">
+  <div class="pageCont foo" id="analizCur" >
     <h1>Анализ валют</h1><br/>
     <div id="choise" align = "center">
       <h4 class="choiseMounth">Выберите валюту: </h4>
-          <p><select name="current" id="choiseCur" data-remote="true"></select></p>
+          <p><select class="custom-select" name="current" id="choiseCur" data-remote="true"></select></p>
       <h4 class="choiseMounth">Выберите период: </h4>
-          <p>Начало: <input type="date" id="startDate">
-             Конец: <input type="date" id="endDate"> 
-          <button class="btn btn-info" onclick="showAnaliz()">Показать</button></p>
+          <p>Начало: <input type="date" class="form-control" id="startDate" onchange="pickMinDate()">
+             Конец: <input type="date" class="form-control" id="endDate" onchange="pickMaxDate()"> 
+          <button class="btn btn-primary" onclick="showAnaliz()">Показать</button></p>
     </div>
   <figure class="highcharts-figure">
     <div id="container"></div>
@@ -70,19 +75,32 @@
   <div  class="pageCont" id="mainPage">
     <h1>Главная страница</h1><br/>
     <div id="content_main">
-      Данное SPA является итоговым проетом IT-Academy по курсу "Веб приложение на Javascript". <br>
+      <h6>Данное SPA является итоговым проетом IT-Academy по курсу "Веб приложение на Javascript". <br>
       Данные о курсах валют получаются от API "Национального банка Республики Беларусь" (nbrb.by). <br>
-      Запросы к API осуществляются с помощью Worker. Тем самым производим разграничение Back-End и Front-End. <br>
+      Запросы к API осуществляются с помощью Worker. Тем самым производим разграничение Back-End и Front-End. <br></h6>
     </div>
   </div>
 </div>
-
-  <script src="./js/curent.js"></script>
-  <script src="./js/convert.js"></script>
   <script src="./js/worker.js"></script>
   <script src="./js/main.js"></script>
+  <script src="./js/curent.js"></script>
+  <script src="./js/convert.js"></script>
   <script src="./js/analizCur.js"></script>
   <script src="./js/charts.js"></script>
+  <script src="./js/spinner.js"></script>
+  <script>
+    // Проверка того, что наш браузер поддерживает Service Worker API.
+  if ('serviceWorker' in navigator) {
+    // Весь код регистрации у нас асинхронный.
+    navigator.serviceWorker.register('./js/sw.js')
+      .then(() => navigator.serviceWorker.ready.then((worker) => {
+        worker.sync.register('syncdata');
+      }))
+      .catch((err) => console.log(err));
+  }
+  </script>
+  
+  <script src="./js/sw.js"></script>
   
 </body>
 </html>

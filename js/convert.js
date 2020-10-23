@@ -1,13 +1,12 @@
-const selectS = document.querySelector('#from');
-const selectV = document.querySelector('#to');
-
 function startConvert (){
     if(selectS.value == ''|| selectV == ''){
+        spinnerPage.render()
         myWorker.postMessage(JSON.stringify('get_data'))
         myWorker.onmessage= function(e){
             const data = JSON.parse(e.data);
             createOptionsConvert(data,selectS);
             createOptionsConvert(data,selectV);
+            spinnerPage.handleClear()
         } 
     }
 }
