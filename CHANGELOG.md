@@ -31,6 +31,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Set restrictions when choosing dates in input type = date.
 
+## [0.4.0] - 2020-10-17
+### Added
+
+- Added a spinner when loading data from API.
+- Added page style.
+- Added service worker.
+
+### Changed
+
+- Set restrictions when choosing dates in input type = date.
+
+
 ## [0.3.2] - 2020-10-09
 
 - Moved "then" to a separate function in "worker.js".
