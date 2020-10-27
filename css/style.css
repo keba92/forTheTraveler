@@ -15,21 +15,18 @@ ul {
 	list-style: none;
 	padding: 0; 
   margin: 0 auto;
-  background:#64aafa; 
   height: 40px; 
-  border-radius: 3px;
-  border-left: 1px solid grey;
+  border-right: 1px solid grey;
 }
   
 a {
   text-decoration: none; 
-  background:#64aafa; 
   color:black; 
   padding:0px 15px; 
   font-family: arial; 
   display: block;
   line-height:40px; 
-  border-right: 1px solid grey;
+  border-left: 1px solid grey;
   -moz-transition: all 0.3s 0.01s ease; 
   -o-transition: all 0.3s 0.01s ease;
   -webkit-transition: all 0.3s 0.01s ease;
@@ -42,7 +39,7 @@ a:hover {
 }
 
 a:active {
-  background-color: black;
+  background: black;
   color: white;
 }
 
@@ -57,26 +54,18 @@ li{
   padding: 30px;
 }
 
-#listCur{
-  display: none;
-}
-
 table{
   padding-top: 15px;
   text-align: center;
 }
 
 td{
-  border: 1px solid grey;
+  border: 3px solid grey;
 }
 
 th{
-  border: 1px solid black;
+  border: 2px solid black;
   background-color: grey;
-}
-
-#convert{
-  display: none;
 }
 
 select, input{
@@ -122,10 +111,51 @@ select, input{
   margin-left: 10px;
 }
 
-.pageCont{
+.spinner-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: grey;
+  opacity: 0.7;
+}
+
+.spinner__img {
+  width: 200px;
+  height: 200px;
+}
+
+#choiseCur{
+  max-width: 400px;
+}
+
+#choise_interval{
+  max-width: 220px;
+}
+
+input{
+  max-width: 220px;
+}
+
+.form-control{
+  display: inline;
+}
+
+table{
+  max-width: 800px;
+}
+
+.foo{
   display: none;
 }
 
-#mainPage{
-  display: block;
+.link{
+  padding: 0px;
+  display: inline;
+  border: none;
+
 }
