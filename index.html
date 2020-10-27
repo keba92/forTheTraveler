@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Currency</title>
+  <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/export-data.js"></script>
+  <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+  <script src="https://code.highcharts.com/modules/data.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  
+  <nav class="navbar navbar-dark bg-primary">
+    <ul class="menu">
+      <li><a id="analiz" name="analizCur" href="#">Анализ валют</a></li>
+      <li><a id="cur" name="listCur" href="#">Список курсов валют</a></li>
+      <li><a id="convers" name="convert" href="#">Конвертер валют</a></li>
+      <li><a id="main" name="mainPage" href="#">О веб-приложении</a></li>
+    </ul>
+  </nav>
+
+<div class="spinner"></div>
+
+<div id="content">
+  <!--Список курсов валют-->
+  <div id="listCur" class="foo">
+    <h1>Cписок курсов валют</h1><br/>
+    <span id="dateList">Выберите дату: <input type="date" class="form-control" id="dateCur" required>
+      <button id="btnCur" class="btn btn-primary" onclick="getDataCur()">Показать</button>
+    </span>
+    <div id="tableCur">
+      <table id="table" class="table" align="center"></table>
+    </div> 
+  </div>
+  <!--Конвертер валют-->
+  <div id="convert" class="foo">
+    <h1>Конвертер валют</h1><br/>
+    <table id="convertTable" class="table" align="center">
+      <thead class="thead-dark">
+        <tr>
+          <th>ОБМЕН С</th>
+          <th>ОБМЕН В</th>
+        </tr>
+      </thead>
+      <tr>
+        <td><select class="custom-select" name="from" id="from"  data-remote="true"></select></td>
+        <td><select class="custom-select" name="to" id="to" data-remote="true"></select></td>
+      </tr>
+      <tr>
+        <td>Сумма обмена: <input type="number" class="form-control" min = "0" id="summa" oninput="dataGet()" width="100px"></td>
+        <td>Итого: <input type="mumber" class="form-control" id="itogo" disabled></td>
+      </tr>
+    </table>
+  </div>
+  <!--Анализ вылют-->
+  <div class="pageCont" id="analizCur" >
+    <h1>Анализ валют</h1><br/>
+    <div id="choise" align = "center">
+      <h4 class="choiseMounth">Выберите валюту: </h4>
+          <p><select class="custom-select" name="current" id="choiseCur" data-remote="true"></select></p>
+      <h4 class="choiseMounth">Выберите интервал: </h4>
+          <p><select class="custom-select" name="choise_interval" id="choise_interval" onchange="choiseInterval()">
+            <option value="0">------</option>
+            <option value="7">Неделя</option>
+            <option value="14">14 дней</option>
+            <option value="31">Месяц</option>
+            <option value="365">Год</option>
+          </select></p>
+      <h4 class="choiseMounth">Выберите период: </h4>
+          <p>Начало: <input type="date" class="form-control" id="startDate" onchange="pickMinDate()">
+             Конец: <input type="date" class="form-control" id="endDate" onchange="pickMaxDate()"> 
+          <button class="btn btn-primary" onclick="showAnaliz()">Показать</button></p>
+    </div>
+  <figure class="highcharts-figure">
+    <div id="container"></div>
+  </figure>
+  </div>
+  <!--Главная страница-->
+  <div  class="pageCont foo" id="mainPage">
+    <h1>О веб-приложении</h1><br/>
+    <div id="content_main">
+      <h4>Данное SPA является итоговым проетом IT-Academy по курсу "Веб приложение на Javascript". </h4><br>
+      <h5>Технические нюансы веб-приложения:</h5><br>
+      <h6>1. Данные о курсах валют получены от API "Национального банка Республики Беларусь" (nbrb.by).<br>
+      Запросы к API осуществляются в отдельном потоке с помощью Worker. <br>
+          2. Для визуализации графиков используется библиотека Highcharts.<br>
+          3. Стилизация некоторых элементов SPA выполнена с помоцью библиотеки Bootstrap.<br>
+          4. Для придания некоторой нативности данному приложению, был использован Service Worker.<br></h6><br>
+      <h5>Навигация по веб-приложению:</h5><br>
+      <h6>1. Вкладка "Главная страница" - содержится краткая информация о данном веб-приложении.<br>
+          2. Вкладка "Список курсов валют" - таблица с курсами валют на выбранную дату. <br>
+          3. Вкладка "Конвертер валют" - интерфес для конвертации между двумя выбранными валютами.<br>
+          4. Вкладка "Анализ валют" - анализ изменения курса валюты за выбранный промежуток времени. </h6>
+    </div>
+  </div>
+</div>
+  <script src="./js/main.js"></script>
+  <script src="./js/worker.js"></script>
+  <script src="./js/curent.js"></script>
+  <script src="./js/convert.js"></script>
+  <script src="./js/analizCur.js"></script>
+  <script src="./js/charts.js"></script>
+  <script src="./js/spinner.js"></script>
+  <script>
+    window.addEventListener("load", function(event) {
+      startAnalizCur();
+    });
+  </script>
+  <script>
+    if (navigator.serviceWorker.controller) {
+    console.log("Active service worker found");
+    } else {
+        navigator.serviceWorker
+        .register('./js/sw.js')
+        .then(function (reg) {
+        console.log("Service worker  registered");
+        });
+    }
+  </script>
+
+  <script src="./js/sw.js"></script>
+  
+</body>
+</html>
