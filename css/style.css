@@ -111,10 +111,6 @@ select, input{
   margin-left: 10px;
 }
 
-#mainPage{
-  display: block;
-}
-
 .spinner-container {
   position: fixed;
   top: 0;
@@ -137,6 +133,10 @@ select, input{
   max-width: 400px;
 }
 
+#choise_interval{
+  max-width: 220px;
+}
+
 input{
   max-width: 220px;
 }
@@ -151,4 +151,11 @@ table{
 
 .foo{
   display: none;
+}
+
+.link{
+  padding: 0px;
+  display: inline;
+  border: none;
+
 }

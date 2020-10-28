@@ -10,7 +10,7 @@ function getDataCur(){
         myWorker.postMessage(JSON.stringify(date.value))
         myWorker.onmessage= function(e){
            changeGenerateTable(JSON.parse(e.data));
-           spinnerPage.handleClear()
+           setTimeout(spinnerPage.handleClear,2000)
         } 
     }else{
         spinnerPage.render()
@@ -18,7 +18,7 @@ function getDataCur(){
         myWorker.postMessage(JSON.stringify('get_data'))
         myWorker.onmessage= function(e){
            generateTable(JSON.parse(e.data));
-           spinnerPage.handleClear()
+           setTimeout(spinnerPage.handleClear,2000)
         }
     }
 }

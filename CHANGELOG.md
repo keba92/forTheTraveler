@@ -5,6 +5,20 @@ The format is based on forthetraveler.netlify.app(https://keepachangelog.com/en/
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [0.5.0] - 2020-10-27
+### Added
+
+- In the Currency Analysis tab, you can now select an interval.
+
+### Changed
+
+- The structure of the SPA menu has been changed.
+- To minimize requests to the API when converting currencies, a state simulation was implemented to store the exchange rate after the first request to the API.
+- Added a timeout for a spinner when loading data.
+
+### Removed
+
+- Scroll to content when clicking on tabs.
 
 ## [0.4.0] - 2020-10-17
 ### Added
@@ -16,7 +30,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Set restrictions when choosing dates in input type = date.
-
 
 ## [0.3.2] - 2020-10-09
 

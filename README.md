@@ -1,14 +1,22 @@
 # forTheTraveler
-SPA to with information about currencies. (final project for IT-Academy)
 
-v.0.4.0
-This version of the product allows:
-- In the "List of exchange rates" tab, view data on the exchange rates for the date you selected.
-- In the "Currency Converter" tab, convert the selected currency with the entered amount into any other currency of your choice.
-- In the tab "Analysis of currencies" added the ability to view the change in currency in a specified period.
-- Added "Main page" tab.
-- Added "spinner".
-- Added service worker.
-Also, a minimal style was added for the developed SPA.
+v.0.5.0
+
+### Данное SPA является итоговым проетом IT-Academy по курсу "Веб приложение на Javascript".
+
+## Технические нюансы веб-приложения:
+
+- Данные о курсах валют получены от API "Национального банка Республики Беларусь" (nbrb.by).
+- Запросы к API осуществляются в отдельном потоке с помощью Worker.
+- Для визуализации графиков используется библиотека Highcharts.
+- Стилизация некоторых элементов SPA выполнена с помоцью библиотеки Bootstrap.
+- Для придания некоторой нативности данному приложению, был использован Service Worker.
+
+## Навигация по веб-приложению:
+
+- Вкладка "Главная страница" - содержится краткая информация о данном веб-приложении.
+- Вкладка "Список курсов валют" - таблица с курсами валют на выбранную дату.
+- Вкладка "Конвертер валют" - интерфес для конвертации между двумя выбранными валютами.
+- Вкладка "Анализ валют" - анализ изменения курса валюты за выбранный промежуток времени.
 
 Link : [Netlify](https://forthetraveler.netlify.app/)
