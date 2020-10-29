@@ -37,10 +37,7 @@ function createGraf(data){
             }
         },
     
-        series: [{
-            name: selectAnaliz.value,
-            data: data[1]
-        }],
+        series: data[1],
     
         responsive: {
             rules: [{
