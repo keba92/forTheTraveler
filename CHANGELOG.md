@@ -5,6 +5,12 @@ The format is based on forthetraveler.netlify.app(https://keepachangelog.com/en/
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [0.5.2] - 2020-10-29
+
+### Changed
+
+- Correct dates in the charts.
+
 ## [0.5.1] - 2020-10-29
 
 ### Changed
