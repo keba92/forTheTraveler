@@ -32,11 +32,11 @@ function choiseInterval(){
     let i = 0;
     dates = [];
     while(i<selectInterval){
-        dates.push(new Date(dateNow).toISOString().substr(0,10));
+        dates.unshift(new Date(dateNow).toISOString().substr(0,10));
         dateNow-=24*60*60*1000;
         i++;
     }
-    prepData(dates[dates.length-1],dates[0])
+    prepData(dates[0],dates[dates.length-1])
 }
 
 async function prepData(start,end){
