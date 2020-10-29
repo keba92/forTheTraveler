@@ -29,9 +29,9 @@
   <!--Список курсов валют-->
   <div id="listCur" class="foo">
     <h1>Cписок курсов валют</h1><br/>
-    <span id="dateList">Выберите дату: <input type="date" class="form-control" id="dateCur" required>
+    <div id="dateList">Выберите дату: <input type="date" class="form-control" id="dateCur" required>
       <button id="btnCur" class="btn btn-primary" onclick="getDataCur()">Показать</button>
-    </span>
+    </div>
     <div id="tableCur">
       <table id="table" class="table" align="center"></table>
     </div> 
@@ -61,7 +61,7 @@
     <h1>Анализ валют</h1><br/>
     <div id="choise" align = "center">
       <h4 class="choiseMounth">Выберите валюту: </h4>
-          <p><select class="custom-select" name="current" id="choiseCur" data-remote="true"></select></p>
+          <p><select class="custom-select" multiple="multiple" name="current" id="choiseCur" data-remote="true"></select></p>
       <h4 class="choiseMounth">Выберите интервал: </h4>
           <p><select class="custom-select" name="choise_interval" id="choise_interval" onchange="choiseInterval()">
             <option value="0">------</option>
@@ -121,7 +121,6 @@
         });
     }
   </script>
-
   <script src="./js/sw.js"></script>
   
 </body>

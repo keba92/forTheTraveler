@@ -19,44 +19,59 @@ function startAnalizCur(){
     endDate.setAttribute('max', today);
 }
 
+let dates;
+
 function showAnaliz(){
-    const arrCur = [];
-    const objDate = {
-        current : selectAnaliz.value, 
-        start: startDate.value,
-        end:endDate.value
-    };
-    myWorker.postMessage(JSON.stringify(objDate))
-    myWorker.onmessage = function(e){
-        const data = JSON.parse(e.data);
-        const date = rangeDate(startDate.value,endDate.value);
-        data.forEach(el => arrCur.push(el['Cur_OfficialRate']));
-        createGraf([date,arrCur]);
-    }
+    dates = rangeDate(startDate.value,endDate.value);
+    prepData(startDate.value,endDate.value); 
 }
 
 function choiseInterval(){
-    const selectInterval = document.querySelector('#choise_interval').value;
-    const dates = [];  
+    const selectInterval = document.querySelector('#choise_interval').value;  
     let dateNow = Date.now();
     let i = 0;
+    dates = [];
     while(i<selectInterval){
         dates.push(new Date(dateNow).toISOString().substr(0,10));
         dateNow-=24*60*60*1000;
         i++;
     }
-    const arrCur = [];
+    prepData(dates[dates.length-1],dates[0])
+}
+
+async function prepData(start,end){
+    const arrVal = [];
+    const opt = document.querySelectorAll('#choiseCur option');
+    opt.forEach(el=>{
+        if (el.selected) arrVal.push(el.value);
+    })
+    const itog = [];
+    let arrCur = [];
     const objDate = {
-        current : selectAnaliz.value, 
-        start: dates[dates.length-1],
-        end:dates[0]
+        current : arrVal, 
+        start: start,
+        end: end
     };
     myWorker.postMessage(JSON.stringify(objDate))
-    myWorker.onmessage = function(e){
+    myWorker.onmessage = await function(e){
         const data = JSON.parse(e.data);
+        arrCur = []
         data.forEach(el => arrCur.push(el['Cur_OfficialRate']));
-        createGraf([dates.reverse(),arrCur]);
+        itog.push(arrCur);
     }
+    const sendArr = [];
+    let tmpObj = {};
+    let i = arrVal.length-1;
+    setTimeout(() => {
+        while(i >= 0){
+            tmpObj = {};
+            tmpObj.name = arrVal.reverse().pop();
+            tmpObj.data = itog.reverse().pop();
+            sendArr.push(tmpObj);
+            i--
+        };
+        createGraf([dates,sendArr]);
+    }, 1000);
 }
 
 function rangeDate(sDate,eDate){

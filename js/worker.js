@@ -2,12 +2,19 @@ const objId ={};
 onmessage = function(e){
     const check = JSON.parse(e.data);
     const urlDate = `https://www.nbrb.by/api/exrates/rates?ondate=${check}&periodicity=0`;
-    const urlPeriod = `https://www.nbrb.by/API/ExRates/Rates/Dynamics/${objId[check.current]}?startDate=${check.start}&endDate=${check.end}`;
-    if (typeof(check)=="string"){
-        fetchData(urlDate);
+    if (!Array.isArray(check.current)){
+        const urlPeriod = `https://www.nbrb.by/API/ExRates/Rates/Dynamics/${objId[check.current]}?startDate=${check.start}&endDate=${check.end}`;
+        if (typeof(check)=="string"){
+            fetchData(urlDate);
+        } else {
+            fetchData(urlPeriod);
+        }  
     } else {
-        fetchData(urlPeriod);
-    }  
+        check.current.forEach(el=>{
+            const urlPeriod = `https://www.nbrb.by/API/ExRates/Rates/Dynamics/${objId[el]}?startDate=${check.start}&endDate=${check.end}`;
+            fetchData(urlPeriod);
+        })
+    }   
 }
 
 function fetchData(url){

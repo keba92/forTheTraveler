@@ -5,6 +5,13 @@ The format is based on forthetraveler.netlify.app(https://keepachangelog.com/en/
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [0.5.1] - 2020-10-29
+
+### Changed
+
+- Minimally changed design.
+- It became possible to select several currencies for analysis.
+
 ## [0.5.0] - 2020-10-27
 ### Added
 
