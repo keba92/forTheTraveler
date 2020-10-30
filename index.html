@@ -71,9 +71,9 @@
             <option value="365">Год</option>
           </select></p>
       <h4 class="choiseMounth">Выберите период: </h4>
-          <p>Начало: <input type="date" class="form-control" id="startDate" onchange="pickMinDate()">
+          <div>Начало: <input type="date" class="form-control" id="startDate" onchange="pickMinDate()">
              Конец: <input type="date" class="form-control" id="endDate" onchange="pickMaxDate()"> 
-          <button class="btn btn-primary" onclick="showAnaliz()">Показать</button></p>
+          <button class="btn btn-primary" onclick="showAnaliz()">Показать</button></div>
     </div>
   <figure class="highcharts-figure">
     <div id="container"></div>
@@ -83,12 +83,12 @@
   <div  class="pageCont foo" id="mainPage">
     <h1>О веб-приложении</h1><br/>
     <div id="content_main">
-      <h4>Данное SPA является итоговым проетом IT-Academy по курсу "Веб приложение на Javascript". </h4><br>
+      <h4>Данное SPA является итоговым проектом IT-Academy по курсу "Веб приложение на Javascript". </h4><br>
       <h5>Технические нюансы веб-приложения:</h5><br>
       <h6>1. Данные о курсах валют получены от API "Национального банка Республики Беларусь" (nbrb.by).<br>
       Запросы к API осуществляются в отдельном потоке с помощью Worker. <br>
           2. Для визуализации графиков используется библиотека Highcharts.<br>
-          3. Стилизация некоторых элементов SPA выполнена с помоцью библиотеки Bootstrap.<br>
+          3. Стилизация некоторых элементов SPA выполнена с помошью библиотеки Bootstrap.<br>
           4. Для придания некоторой нативности данному приложению, был использован Service Worker.<br></h6><br>
       <h5>Навигация по веб-приложению:</h5><br>
       <h6>1. Вкладка "Главная страница" - содержится краткая информация о данном веб-приложении.<br>
