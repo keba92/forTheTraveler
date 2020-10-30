@@ -39,39 +39,37 @@ function choiseInterval(){
     prepData(dates[0],dates[dates.length-1])
 }
 
-async function prepData(start,end){
+function prepData(start,end){
     const arrVal = [];
+    const itog = [];
+    let arrCur = [];
+    const sendArr = [];
+    let tmpObj = {};
     const opt = document.querySelectorAll('#choiseCur option');
     opt.forEach(el=>{
         if (el.selected) arrVal.push(el.value);
     })
-    const itog = [];
-    let arrCur = [];
     const objDate = {
         current : arrVal, 
         start: start,
         end: end
     };
+    spinnerPage.render()
     myWorker.postMessage(JSON.stringify(objDate))
-    myWorker.onmessage = await function(e){
+    myWorker.onmessage = function(e){
         const data = JSON.parse(e.data);
         arrCur = []
-        data.forEach(el => arrCur.push(el['Cur_OfficialRate']));
-        itog.push(arrCur);
-    }
-    const sendArr = [];
-    let tmpObj = {};
-    let i = arrVal.length-1;
-    setTimeout(() => {
-        while(i >= 0){
-            tmpObj = {};
-            tmpObj.name = arrVal.reverse().pop();
-            tmpObj.data = itog.reverse().pop();
-            sendArr.push(tmpObj);
-            i--
+        data[0].forEach(el => arrCur.push(el['Cur_OfficialRate']));
+        tmpObj = {
+            name : data[1],
+            data : arrCur
         };
+        sendArr.push(tmpObj);
+    }
+    setTimeout(() => {
         createGraf([dates,sendArr]);
-    }, 1000);
+        spinnerPage.handleClear()
+    }, 1800);
 }
 
 function rangeDate(sDate,eDate){

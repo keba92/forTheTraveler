@@ -34,7 +34,7 @@ function generateTableHead() {
     const thead = table.createTHead();
     thead.classList.add('thead-dark')
     const row = thead.insertRow();
-    const thName = ['Аббревиатура валюты','Наименование валюты','Количество единиц иностранной валюты', 'Установленый курс валют, руб.']
+    const thName = ['Аббревиатура валюты','Наименование валюты','Количество единиц иностранной валюты', 'Установленный курс валют, руб.']
     thName.forEach(el => {
         const th = document.createElement("th");
         const text = document.createTextNode(el);
