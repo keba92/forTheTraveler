@@ -1,5 +1,5 @@
-let CACHE_NAME = 'my-cache';
-let urlsToCache = [
+const CACHE_NAME = 'my-cache';
+const urlsToCache = [
   '../css/style.css',
   '../js/worker.js',
   '../js/main.js',
@@ -11,44 +11,40 @@ let urlsToCache = [
   '../img/tweed.png',
   '../img/spinner.svg',
   '../img/favicon.ico',
-  '../js/worker.js'
-  ];
+  '../js/worker.js',
+];
 
-self.addEventListener('install', function(event) {
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-        .then(function(cache) {
-            console.log('Opened cache');
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache) => {
+        console.log('Opened cache');
         return cache.addAll(urlsToCache);
-        })
-    );
+      })
+  );
 });
 
-self.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request)
-      .then(function(response) {
-        // Cache hit - return response
+      .then((response) => {
         if (response) {
           return response;
         }
         return fetch(event.request);
-      }
-    )
+      })
   );
 });
 
-self.addEventListener('activate', function(event) {
-  var cacheWhitelist = ['pigment'];
-  event.waitUntil(
-    caches.keys().then(function(cacheNames) {
-      return Promise.all(
-        cacheNames.map(function(cacheName) {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
+self.addEventListener('activate', (event) => {
+  const cacheWhitelist = ['pigment'];
+  event.waitUntil(caches.keys().then((cacheNames) => {
+    return Promise.all(
+      cacheNames.map((cacheName) => {
+        if (cacheWhitelist.indexOf(cacheName) === -1) {
+          return caches.delete(cacheName);
+        }
+      })
+    );
+  }));
 });
