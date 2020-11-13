@@ -5,6 +5,22 @@ The format is based on forthetraveler.netlify.app(https://keepachangelog.com/en/
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [0.6.0] - 2020-11-03
+### Added
+
+- Added the ability to select multiple currencies for analysis, as well as the ability to select different types of periodicity.
+- To analyze the quality of the code, ESLint was used with the eslint-config-airbnb-base configurations.
+- Added .gitignore to filter files uploaded to github.
+
+### Changed
+
+- Minimally changed design.
+- Fixed bugs with displaying charts (currencies were incorrectly indicated).
+
+### Removed
+
+- Unnecessary pictures and icons have been removed.
+
 ## [0.5.3] - 2020-10-30
 
 ### Changed

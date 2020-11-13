@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Currency</title>
   <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
   <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -62,7 +63,12 @@
     <div id="choise" align = "center">
       <h4 class="choiseMounth">Выберите валюту: </h4>
           <p><select class="custom-select" multiple="multiple" name="current" id="choiseCur" data-remote="true"></select></p>
-      <h4 class="choiseMounth">Выберите интервал: </h4>
+      <h4 class="choiseMounth">Выберите временной промежуток: </h4>
+      <div id="choise-time">
+        <p><input name="time" type="radio" value="period" checked> Выбрать период </p>
+        <p><input name="time" type="radio" value="interval"> Выбрать интервал </p>
+      </div>
+      <div id="interval"><h4 class="choiseMounth">Выберите интервал: </h4>
           <p><select class="custom-select" name="choise_interval" id="choise_interval" onchange="choiseInterval()">
             <option value="0">------</option>
             <option value="7">Неделя</option>
@@ -70,10 +76,12 @@
             <option value="31">Месяц</option>
             <option value="365">Год</option>
           </select></p>
-      <h4 class="choiseMounth">Выберите период: </h4>
+      </div>
+      <div id="period"><h4 class="choiseMounth">Выберите период: </h4>
           <div>Начало: <input type="date" class="form-control" id="startDate" onchange="pickMinDate()">
              Конец: <input type="date" class="form-control" id="endDate" onchange="pickMaxDate()"> 
           <button class="btn btn-primary" onclick="showAnaliz()">Показать</button></div>
+      </div>
     </div>
   <figure class="highcharts-figure">
     <div id="container"></div>

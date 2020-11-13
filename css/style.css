@@ -179,3 +179,13 @@ table{
 #convertTable td{
   border: none;
 }
+
+#choise-time p{
+  display: inline;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#interval{
+  display: none;
+}
