@@ -9,7 +9,8 @@ const selectAnaliz = document.querySelector('#choiseCur');
 const startDate = document.querySelector('#startDate');
 const endDate = document.querySelector('#endDate');
 const today = new Date().toISOString().split('T')[0];
-const radioInput = document.querySelectorAll('div p input[type="radio"]');
+const radioInput = document.querySelectorAll('div p input[name="timeRates"]');
+const radioInputTime = document.querySelectorAll('div p input[name="time"]');
 let dates;
 
 document.querySelectorAll('a').forEach((el) => {
