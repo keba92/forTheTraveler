@@ -50,10 +50,21 @@ function generateTableHead() {
 
 function changeGenerateTable(data) {
   const total = table.rows.length;
-  for (let i = 0; i < total; i++) {
+  console.log(data);
+  for (let i = 0; i < data.length; i++) {
+    const row = table.insertRow();
     const obj = data[i - 1];
-    if (i > 0) {
+    if (i > 0 && data.length - total < data.length - i) {
+      table.rows[i].cells[0].innerHTML = obj.Cur_Abbreviation;
+      table.rows[i].cells[1].innerHTML = obj.Cur_Name;
+      table.rows[i].cells[2].innerHTML = obj.Cur_Scale;
       table.rows[i].cells[3].innerHTML = obj.Cur_OfficialRate;
+    } else if (data.length - total >= data.length - i) {
+      for (const key in obj) {
+        const cell = row.insertCell();
+        const text = document.createTextNode(obj[key]);
+        cell.appendChild(text);
+      }
     }
   }
 }
@@ -61,7 +72,7 @@ function changeGenerateTable(data) {
 function generateTable(data) {
   data.forEach((el) => {
     const row = table.insertRow();
-    for (key in el) {
+    for (const key in el) {
       const cell = row.insertCell();
       const text = document.createTextNode(el[key]);
       cell.appendChild(text);

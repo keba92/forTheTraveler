@@ -1,5 +1,6 @@
 body{
     background-image: url(/img/tweed.png);
+    min-width: 768px;
 }
 
 h1 {
@@ -136,7 +137,7 @@ select, input{
   max-width: 400px;
 }
 
-#choise_interval{
+#choise_intervalRates, #choise_interval{
   max-width: 220px;
 }
 
@@ -180,7 +181,7 @@ table{
   border: none;
 }
 
-#choise-time p{
+#choiseTimeRates p,#choise-time p{
   display: inline;
   margin-left: 20px;
   margin-right: 20px;
@@ -188,4 +189,19 @@ table{
 
 #interval{
   display: none;
+}
+
+.rates{
+  display: none;
+}
+
+.bord{
+  height: 100px;
+  border: 1px solid grey;
+  margin-top: 15px;
+  max-width: 800px;
+}
+
+#time-bord{
+  min-height: 150px;
 }
