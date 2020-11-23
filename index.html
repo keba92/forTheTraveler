@@ -31,7 +31,7 @@
   <!--Список курсов валют-->
   <div id="listCur" class="foo">
     <h1>Cписок курсов валют</h1><br/>
-    <div id="dateList">Выберите дату: <input type="date" class="form-control" id="dateCur" required>
+    <div id="dateList">Выберите дату: <input type="date" id="dateCur" required>
       <button id="btnCur" class="btn btn-primary" onclick="getDataCur()">Показать</button>
     </div>
     <div id="tableCur">
@@ -49,12 +49,16 @@
         </tr>
       </thead>
       <tr>
-        <td><select class="custom-select" name="from" id="from"  data-remote="true"></select></td>
-        <td><select class="custom-select" name="to" id="to" data-remote="true"></select></td>
+        <td><select class="custom-select" name="from" id="from"  data-remote="true">
+          <option ></option>
+        </select></td>
+        <td><select class="custom-select" name="to" id="to" data-remote="true">
+          <option ></option>
+        </select></td>
       </tr>
       <tr>
-        <td>Сумма обмена: <input type="number" class="form-control" min = "0" id="summa" oninput="dataGet()" width="100px"></td>
-        <td>Итого: <input type="mumber" class="form-control" id="itogo" disabled></td>
+        <td>Сумма обмена: <input type="number" min = "0" id="summa" oninput="dataGet()" width="100px"></td>
+        <td>Итого: <input type="mumber" id="itogo" disabled></td>
       </tr>
     </table>
   </div>
@@ -78,7 +82,6 @@
       </div>
       <div id="interval"><h4 class="choiseMounth">Выберите интервал: </h4>
           <p><select class="custom-select" name="choise_interval" id="choise_interval" onchange="choiseInterval()">
-            <option value="0">------</option>
             <option value="7">Неделя</option>
             <option value="14">14 дней</option>
             <option value="31">Месяц</option>
@@ -86,16 +89,16 @@
           </select></p>
       </div>
       <div id="period"><h4 class="choiseMounth">Выберите период: </h4>
-          <div>Начало: <input type="date" class="form-control" id="startDate" onchange="pickMinDate()">
-             Конец: <input type="date" class="form-control" id="endDate" onchange="pickMaxDate()"> 
-          <button class="btn btn-primary" onclick="showAnaliz()">Показать</button></div>
+          <span>Начало: <input type="date" id="startDate" onchange="pickMinDate()">
+             Конец: <input type="date" id="endDate" onchange="pickMaxDate()"> 
+          <button class="btn btn-primary" onclick="showAnaliz()">Показать</button></span>
       </div>
       </div>
 
       <div class="rates">
         <div class="bord" id="intervalRates"><h4 class="choiseMounth">Выберите интервал: </h4>
           <p><select class="custom-select" name="choise_intervalRates" id="choise_intervalRates" onchange="changeDateInput()">
-            <option >------</option>
+            <option ></option>
             <option value="1">День</option>
             <option value="7">Неделя</option>
             <option value="31">Месяц</option>
@@ -103,9 +106,9 @@
           </select></p>
         </div>
         <div class="bord" id="periodRates"><h4 class="choiseMounth">Выберите период: </h4>
-          <div>Начало: <input type="date" class="form-control rate" id="startDateRates" onchange="pickMinDateRate()">
-             Конец: <input type="date" class="form-control rate" id="endDateRates"> 
-          <button class="btn btn-primary" onclick="showAnalizRates()">Показать</button></div>
+          <span>Начало: <input type="date" class="rate" id="startDateRates" onchange="pickMinDateRate()">
+             Конец: <input type="date" class="rate" id="endDateRates" onchange="pickMaxDateRate();"> 
+          <button class="btn btn-primary" onclick="showAnalizRates()">Показать</button></span>
         </div>
         <p id="infoYear"></p>
       </div>
