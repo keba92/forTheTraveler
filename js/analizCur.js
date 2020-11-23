@@ -53,6 +53,33 @@ function showAnaliz() {
   prepData(startDate.value, endDate.value);
 }
 
+function changeDateInput() {
+  const intervalRates = document.querySelector('#choise_intervalRates').value;
+  if (intervalRates === '31') {
+    startDateRates.type = 'month';
+    endDateRates.type = 'month';
+  } else if (intervalRates === '364') {
+    const today = new Date().toISOString().split('T')[0];
+    endDateRates.hasAttribute('required');
+    endDateRates.setAttribute('max', today);
+    startDateRates.type = 'date';
+    endDateRates.type = 'date';
+    endDateRates.valueAsDate = new Date();
+    makeDate();
+  } else {
+    startDateRates.type = 'date';
+    endDateRates.type = 'date';
+  }
+}
+
+function pickMaxDateRate() {
+  startDateRates.setAttribute('max', new Date(endDateRates.value).toISOString().split('T')[0]);
+}
+
+function pickMinDateRate() {
+  endDateRates.setAttribute('min', new Date(startDateRates.value).toISOString().split('T')[0]);
+}
+
 function choiseInterval() {
   const selectInterval = document.querySelector('#choise_interval').value;
   let dateNow = Date.now();
@@ -149,7 +176,7 @@ function prepRates(arrData, arrDates, interval, val) {
     });
     return [newDate, [{ name: val, data: rates }]];
   // eslint-disable-next-line no-else-return
-  } else if (interval === '365') {
+  } else if (interval === '364') {
     const newDate = arrDates.map((el) => {
       const day = new Date(el);
       const optionDate = { year: 'numeric' };
@@ -172,5 +199,28 @@ function rangeDate(sDate, eDate) {
     dates.unshift(new Date(dateParse).toISOString().substr(0, 10));
     dateParse -= 24 * 60 * 60 * 1000;
     i++;
+  }
+}
+
+endDateRates.addEventListener('change', (e) => {
+  if (e) {
+    makeDate();
+    pickMaxDateRate();
+  }
+});
+
+function makeDate() {
+  const intervalRates = document.querySelector('#choise_intervalRates').value;
+  const dinamicArr = [];
+  let i = 0;
+  if (intervalRates === '364') {
+    const dStart = new Date(endDateRates.value);
+    let dateParse = Date.parse(endDateRates.value);
+    while (i - 3 < intervalRates) {
+      dinamicArr.push(new Date(dateParse).toISOString().substr(0, 10));
+      dateParse -= 24 * 60 * 60 * 1000;
+      i++;
+    }
+    return startDateRates.value = dinamicArr.pop();
   }
 }

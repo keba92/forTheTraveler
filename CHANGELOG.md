@@ -5,6 +5,15 @@ The format is based on forthetraveler.netlify.app(https://keepachangelog.com/en/
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [0.7.1] - 2020-11-23
+
+### Changed
+
+- Changed serwice worker.
+- Added manifest.json.
+- Correct analizCur.js.
+
+
 ## [0.7.0] - 2020-11-18
 ### Added
 
