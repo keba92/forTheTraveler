@@ -1,11 +1,12 @@
 {
-    "theme_color": "#fefdfc",
+    "theme_color": "#fffdfc",
     "background_color": "#fffdfc",
     "display": "standalone",
     "scope": "/",
     "start_url": "https://forthetraveler.netlify.app/",
     "app_name": "Currency",
     "short_name": "Currency",
+    "name": "Currency",
     "description": "Final project IT-Academy",
     "icons": [
         {
