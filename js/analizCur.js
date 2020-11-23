@@ -1,3 +1,5 @@
+const startDateRates = document.querySelector('#startDateRates');
+const endDateRates = document.querySelector('#endDateRates');
 radioInput.forEach((el) => {
   el.addEventListener('click', () => {
     radioInput.forEach((elem) => {
@@ -49,8 +51,12 @@ function startAnalizCur() {
 }
 
 function showAnaliz() {
-  rangeDate(startDate.value, endDate.value);
-  prepData(startDate.value, endDate.value);
+  if (startDate.value && endDate.value) {
+    rangeDate(startDate.value, endDate.value);
+    prepData(startDate.value, endDate.value);
+  } else {
+    return alert('Введена некорректная дата');
+  }
 }
 
 function changeDateInput() {
@@ -102,6 +108,7 @@ function prepData(first, last) {
   opt.forEach((el) => {
     if (el.selected) arrVal.push(el.value);
   });
+  if (arrVal.length === 0) return alert('Ни одна валюта не выбрана');
   const objDate = {
     current: arrVal,
     start: first,
@@ -121,6 +128,7 @@ function prepData(first, last) {
   };
   setTimeout(() => {
     createGraf([dates, sendArr]);
+    console.log([dates, sendArr]);
     spinnerPage.handleClear();
   }, 1800);
 }
@@ -135,27 +143,31 @@ function showAnalizRates() {
   const intervalRates = document.querySelector('#choise_intervalRates');
   const dateStartRates = document.querySelector('#startDateRates');
   const dateEndRates = document.querySelector('#endDateRates');
-  rangeDate(dateStartRates.value, dateEndRates.value);
-  const arrDates = [];
-  while (dates.length > 0) {
-    arrDates.push(dates[0]);
-    dates.splice(0, intervalRates.value);
+  if (dateStartRates.value && dateEndRates.value && intervalRates.value) {
+    rangeDate(dateStartRates.value, dateEndRates.value);
+    const arrDates = [];
+    while (dates.length > 0) {
+      arrDates.push(dates[0]);
+      dates.splice(0, intervalRates.value);
+    }
+    const objDate = {
+      current: arrVal,
+      start: arrDates[0],
+      end: arrDates[arrDates.length - 1],
+    };
+    spinnerPage.render();
+    myWorker.postMessage(JSON.stringify(objDate));
+    myWorker.onmessage = (e) => {
+      const data = JSON.parse(e.data);
+      rates = prepRates(data, arrDates, intervalRates.value, arrVal);
+    };
+    setTimeout(() => {
+      createGraf(rates);
+      spinnerPage.handleClear();
+    }, 1800);
+  } else {
+    return alert('Введена некорректная дата');
   }
-  const objDate = {
-    current: arrVal,
-    start: arrDates[0],
-    end: arrDates[arrDates.length - 1],
-  };
-  spinnerPage.render();
-  myWorker.postMessage(JSON.stringify(objDate));
-  myWorker.onmessage = (e) => {
-    const data = JSON.parse(e.data);
-    rates = prepRates(data, arrDates, intervalRates.value, arrVal);
-  };
-  setTimeout(() => {
-    createGraf(rates);
-    spinnerPage.handleClear();
-  }, 1800);
 }
 
 function prepRates(arrData, arrDates, interval, val) {
@@ -195,7 +207,7 @@ function rangeDate(sDate, eDate) {
   let dateParse = Date.parse(eDate);
   let i = 0;
   dates = [];
-  while (i < daysLag) {
+  while (i < daysLag + 1) {
     dates.unshift(new Date(dateParse).toISOString().substr(0, 10));
     dateParse -= 24 * 60 * 60 * 1000;
     i++;
@@ -205,7 +217,6 @@ function rangeDate(sDate, eDate) {
 endDateRates.addEventListener('change', (e) => {
   if (e) {
     makeDate();
-    pickMaxDateRate();
   }
 });
 

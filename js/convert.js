@@ -22,15 +22,19 @@ function createOptionsConvert(optData, select) {
 }
 
 function dataGet() {
-  if (!infoData) {
-    myWorker.postMessage(JSON.stringify('get_data'));
-    myWorker.onmessage = (e) => {
-      const data = JSON.parse(e.data);
-      infoData = data;
-      dataForCalculate(data);
-    };
+  if (selectS.value && selectV.value) {
+    if (!infoData) {
+      myWorker.postMessage(JSON.stringify('get_data'));
+      myWorker.onmessage = (e) => {
+        const data = JSON.parse(e.data);
+        infoData = data;
+        dataForCalculate(data);
+      };
+    } else {
+      dataForCalculate(infoData);
+    }
   } else {
-    dataForCalculate(infoData);
+    return alert('Выберите валюты для конвертации');
   }
 }
 

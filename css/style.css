@@ -1,6 +1,6 @@
 body{
     background-image: url(/img/tweed.png);
-    min-width: 768px;
+    min-width: 750px;
 }
 
 h1 {
@@ -142,7 +142,7 @@ select, input{
 }
 
 input{
-  max-width: 250px;
+  max-width: 165px;
 }
 
 .form-control{

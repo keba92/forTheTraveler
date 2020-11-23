@@ -12,8 +12,6 @@ const today = new Date().toISOString().split('T')[0];
 const radioInput = document.querySelectorAll('div p input[name="timeRates"]');
 const radioInputTime = document.querySelectorAll('div p input[name="time"]');
 const choiseDateRate = document.querySelectorAll('div input[class="rate"]');
-const startDateRates = document.querySelector('#startDateRates');
-const endDateRates = document.querySelector('#endDateRates');
 let dates;
 
 document.querySelectorAll('a').forEach((el) => {
