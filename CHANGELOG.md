@@ -5,6 +5,14 @@ The format is based on forthetraveler.netlify.app(https://keepachangelog.com/en/
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [0.7.6] - 2020-11-24
+### Changed
+
+- The list of files for loading into the cache has been expanded.
+- Work of the site as a full-fledged PWA.
+- Returned screen orientation view for mobile devices "landscape".
+
+
 ## [0.7.5] - 2020-11-23
 ### Changed
 
