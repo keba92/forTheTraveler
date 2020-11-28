@@ -6,12 +6,18 @@ function createGraf(data) {
     subtitle: {
       text: 'Источник: Национальный банк Республики Беларусь',
     },
+    rangeSelector: {
+      enabled: false
+    },
     yAxis: {
       title: {
         text: 'Стоимость валюты',
       },
     },
     xAxis: {
+      scrollbar: {
+        enabled: true
+      },
       categories: data[0],
       labels: {
         rotation: -45,
@@ -33,7 +39,7 @@ function createGraf(data) {
     responsive: {
       rules: [{
         condition: {
-          maxWidth: 1500,
+          maxWidth: 2000,
         },
         chartOptions: {
           legend: {

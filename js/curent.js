@@ -50,7 +50,6 @@ function generateTableHead() {
 
 function changeGenerateTable(data) {
   const total = table.rows.length;
-  console.log(data);
   for (let i = 0; i < data.length; i++) {
     const row = table.insertRow();
     const obj = data[i - 1];

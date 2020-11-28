@@ -1,3 +1,4 @@
+/* eslint-disable new-parens */
 let infoData;
 function startConvert() {
   if (selectS.value === '' || selectV === '') {
@@ -13,7 +14,9 @@ function startConvert() {
 }
 
 function createOptionsConvert(optData, select) {
-  optData.map((el) => {
+  // eslint-disable-next-line max-len
+  const unique = optData.filter(((set) => (el) => !set.has(el.Cur_Abbreviation) && set.add(el.Cur_Abbreviation))(new Set()));
+  unique.map((el) => {
     const option = document.createElement('option');
     option.text = el.Cur_Name;
     option.value = el.Cur_Abbreviation;
