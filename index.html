@@ -102,7 +102,7 @@
             <option value="1">День</option>
             <option value="7">Неделя</option>
             <option value="31">Месяц</option>
-            <option value="364">Год</option>
+            <option value="365">Год</option>
           </select></p>
         </div>
         <div class="bord" id="periodRates"><h4 class="choiseMounth">Выберите период: </h4>
@@ -110,9 +110,7 @@
              Конец: <input type="date" class="rate" id="endDateRates" onchange="pickMaxDateRate();"> 
           <button class="btn btn-primary" onclick="showAnalizRates()">Показать</button></span>
         </div>
-        <p id="infoYear"></p>
       </div>
-      <h6 class="footer-analiz"> * API Национального банка Республики Беларусь позволяет получить данные не более чем за 365 дней ( 1 год )</h6>
     </div>
   <figure class="highcharts-figure">
     <div id="container"></div>

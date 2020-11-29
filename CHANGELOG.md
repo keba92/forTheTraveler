@@ -5,6 +5,13 @@ The format is based on forthetraveler.netlify.app(https://keepachangelog.com/en/
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [0.7.9] - 2020-11-28
+### Changed
+
+- Сonverted requests to obtain data on currencies, taking into account the changing ID for currencies.
+- Considered the logic of missing exchange rates for some dates.
+
+
 ## [0.7.8] - 2020-11-24
 ### Changed
 

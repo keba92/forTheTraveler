@@ -1,3 +1,5 @@
+/* eslint-disable no-loop-func */
+/* eslint-disable no-else-return */
 const startDateRates = document.querySelector('#startDateRates');
 const endDateRates = document.querySelector('#endDateRates');
 radioInput.forEach((el) => {
@@ -39,7 +41,7 @@ function pickMinDate() {
 function startAnalizCur() {
   if (selectAnaliz.value === '') {
     spinnerPage.render();
-    myWorker.postMessage(JSON.stringify('get_data'));
+    myWorker.postMessage(JSON.stringify('get_cur_data'));
     myWorker.onmessage = (e) => {
       const data = JSON.parse(e.data);
       createOptionsConvert(data, selectAnaliz);
@@ -53,7 +55,7 @@ function startAnalizCur() {
 function showAnaliz() {
   if (startDate.value && endDate.value) {
     rangeDate(startDate.value, endDate.value);
-    prepData(startDate.value, endDate.value);
+    prepData();
   } else {
     return alert('Введена некорректная дата');
   }
@@ -64,14 +66,15 @@ function changeDateInput() {
   if (intervalRates === '31') {
     startDateRates.type = 'month';
     endDateRates.type = 'month';
-  } else if (intervalRates === '364') {
-    const today = new Date().toISOString().split('T')[0];
+  } else if (intervalRates === '365') {
+    const today = new Date().getFullYear();
+    startDateRates.type = 'number';
+    endDateRates.type = 'number';
     endDateRates.hasAttribute('required');
     endDateRates.setAttribute('max', today);
-    startDateRates.type = 'date';
-    endDateRates.type = 'date';
-    endDateRates.valueAsDate = new Date();
-    makeDate();
+    startDateRates.setAttribute('min', '1992');
+    startDateRates.value = '1992';
+    endDateRates.value = today;
   } else {
     startDateRates.type = 'date';
     endDateRates.type = 'date';
@@ -96,14 +99,11 @@ function choiseInterval() {
     dateNow -= 24 * 60 * 60 * 1000;
     i++;
   }
-  prepData(dates[0], dates[dates.length - 1]);
+  prepData();
 }
 
-function prepData(first, last) {
+function prepData() {
   const arrVal = [];
-  let arrCur = [];
-  const sendArr = [];
-  let tmpObj = {};
   const opt = document.querySelectorAll('#choiseCur option');
   opt.forEach((el) => {
     if (el.selected) arrVal.push(el.value);
@@ -111,92 +111,97 @@ function prepData(first, last) {
   if (arrVal.length === 0) return alert('Ни одна валюта не выбрана');
   const objDate = {
     current: arrVal,
-    start: first,
-    end: last,
+    date: dates
   };
   spinnerPage.render();
   myWorker.postMessage(JSON.stringify(objDate));
-  myWorker.onmessage = (e) => {
-    const data = JSON.parse(e.data);
-    arrCur = [];
-    data[0].forEach((el) => arrCur.push(el.Cur_OfficialRate));
-    tmpObj = {
-      name: data[1],
-      data: arrCur,
-    };
-    sendArr.push(tmpObj);
-  };
-  setTimeout(() => {
-    createGraf([dates, sendArr]);
-    console.log([dates, sendArr]);
+  myWorker.onmessage = async (e) => {
+    const data = await JSON.parse(e.data);
+    const info = await correctData(data);
+    await createGraf(info);
     spinnerPage.handleClear();
-  }, 1800);
+  };
 }
 
 function showAnalizRates() {
   const arrVal = [];
-  let rates;
   const opt = document.querySelectorAll('#choiseCur option');
   opt.forEach((el) => {
     if (el.selected) arrVal.push(el.value);
   });
-  const intervalRates = document.querySelector('#choise_intervalRates');
-  const dateStartRates = document.querySelector('#startDateRates');
-  const dateEndRates = document.querySelector('#endDateRates');
-  if (dateStartRates.value && dateEndRates.value && intervalRates.value) {
-    rangeDate(dateStartRates.value, dateEndRates.value);
-    const arrDates = [];
-    while (dates.length > 0) {
-      arrDates.push(dates[0]);
-      dates.splice(0, intervalRates.value);
-    }
+  const intervalRates = document.querySelector('#choise_intervalRates').value;
+  const dateStartRates = document.querySelector('#startDateRates').value;
+  const dateEndRates = document.querySelector('#endDateRates').value;
+  if (dateStartRates && dateEndRates && intervalRates) {
+    rangeDate(dateStartRates, dateEndRates);
     const objDate = {
       current: arrVal,
-      start: arrDates[0],
-      end: arrDates[arrDates.length - 1],
+      date: dates
     };
     spinnerPage.render();
     myWorker.postMessage(JSON.stringify(objDate));
-    myWorker.onmessage = (e) => {
-      const data = JSON.parse(e.data);
-      rates = prepRates(data, arrDates, intervalRates.value, arrVal);
+    myWorker.onmessage = async (e) => {
+      const data = await JSON.parse(e.data);
+      const info = await correctData(data);
+      const rates = await prepRates(info, intervalRates, dateStartRates, dateEndRates);
+      await createGraf(rates);
+      await spinnerPage.handleClear();
     };
-    setTimeout(() => {
-      createGraf(rates);
-      spinnerPage.handleClear();
-    }, 1800);
   } else {
     return alert('Введена некорректная дата');
   }
 }
 
-function prepRates(arrData, arrDates, interval, val) {
-  const arrCur = [];
-  const rates = [];
-  arrData[0].forEach((el) => arrCur.push(el.Cur_OfficialRate));
-  while (arrCur.length > interval) {
-    const newArr = arrCur.slice(0, interval);
-    const result = newArr.reduce((sum, current) => (sum + current), 0);
-    rates.push(Number((result / interval).toFixed(3)));
-    arrCur.splice(0, interval);
-  }
-  if (interval === '31') {
-    const newDate = arrDates.map((el) => {
-      const day = new Date(el);
-      const optionDate = { year: 'numeric', month: 'long' };
-      return day.toLocaleString('ru-RU', optionDate);
-    });
-    return [newDate, [{ name: val, data: rates }]];
-  // eslint-disable-next-line no-else-return
-  } else if (interval === '364') {
-    const newDate = arrDates.map((el) => {
-      const day = new Date(el);
-      const optionDate = { year: 'numeric' };
-      return day.toLocaleString('ru-RU', optionDate);
-    });
-    return [newDate, [{ name: val, data: rates }]];
-  } else {
-    return [arrDates, [{ name: val, data: rates }]];
+async function prepRates(data, interval, start, end) {
+  const arrDates = [];
+  const arrYears = [];
+  let newDate = [];
+  const res = data[1].map((el) => {
+    const rates = [];
+    if (interval !== '365') {
+      while (data[0].length >= interval) {
+        arrDates.push(data[0][interval - 1]);
+        const newArr = el.data.slice(0, interval);
+        const result = newArr.reduce((sum, current) => (sum + current), 0);
+        rates.push(Number((result / interval).toFixed(3)));
+        data[0].splice(0, interval);
+        el.data.splice(0, interval);
+      }
+      if (interval === '31') {
+        newDate = arrDates.map((elem) => {
+          const day = new Date(elem);
+          const optionDate = { year: 'numeric', month: 'long' };
+          return day.toLocaleString('ru-RU', optionDate);
+        });
+        return { name: el.name, data: rates };
+      // eslint-disable-next-line no-else-return
+      } else {
+        return { name: el.name, data: rates };
+      }
+    } else {
+      while (el.data.length >= interval) {
+        const newArr = el.data.slice(0, interval);
+        const result = newArr.reduce((sum, current) => (sum + current), 0);
+        rates.push(Number((result / interval).toFixed(3)));
+        el.data.splice(0, interval);
+      }
+      let i = Number(start);
+      while (i <= Number(end)) {
+        arrYears.push(i);
+        i += 1;
+      }
+      return { name: el.name, data: rates };
+    }
+  });
+  switch (interval) {
+    case '1':
+      return [arrDates, res];
+    case '7':
+      return [arrDates, res];
+    case '31':
+      return [newDate, res];
+    case '365':
+      return [arrYears, res];
   }
 }
 
@@ -214,24 +219,19 @@ function rangeDate(sDate, eDate) {
   }
 }
 
-endDateRates.addEventListener('change', (e) => {
-  if (e) {
-    makeDate();
+async function correctData(data) {
+  const resultCur = [];
+  for (const key in data) {
+    const arrReturn = [];
+    data[key].dateArr.forEach((el, index) => {
+      const idx = dates.indexOf(el);
+      arrReturn[idx] = data[key].resultArr[index];
+    });
+    resultCur.push({
+      turboThreshold: dates.length + 1000,
+      name: key,
+      data: arrReturn
+    });
   }
-});
-
-function makeDate() {
-  const intervalRates = document.querySelector('#choise_intervalRates').value;
-  const dinamicArr = [];
-  let i = 0;
-  if (intervalRates === '364') {
-    const dStart = new Date(endDateRates.value);
-    let dateParse = Date.parse(endDateRates.value);
-    while (i - 3 < intervalRates) {
-      dinamicArr.push(new Date(dateParse).toISOString().substr(0, 10));
-      dateParse -= 24 * 60 * 60 * 1000;
-      i++;
-    }
-    return startDateRates.value = dinamicArr.pop();
-  }
+  return [dates, resultCur];
 }
