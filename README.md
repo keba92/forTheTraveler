@@ -1,6 +1,6 @@
 # forTheTraveler
 
-v.0.8.0
+v.0.8.1
 
 ### Данное SPA является итоговым проектом IT-Academy по курсу "Веб приложение на Javascript".
 

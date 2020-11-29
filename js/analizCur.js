@@ -77,6 +77,8 @@ function changeDateInput() {
     endDateRates.type = 'number';
     endDateRates.hasAttribute('required');
     endDateRates.setAttribute('max', today);
+    endDateRates.setAttribute('min', '1992');
+    startDateRates.setAttribute('max', today);
     startDateRates.setAttribute('min', '1992');
     startDateRates.value = '1992';
     endDateRates.value = today;
@@ -92,19 +94,6 @@ function pickMaxDateRate() {
 
 function pickMinDateRate() {
   endDateRates.setAttribute('min', new Date(startDateRates.value).toISOString().split('T')[0]);
-}
-
-function choiseInterval() {
-  const selectInterval = document.querySelector('#choise_interval').value;
-  let dateNow = Date.now();
-  let i = 0;
-  dates = [];
-  while (i < selectInterval) {
-    dates.unshift(new Date(dateNow).toISOString().substr(0, 10));
-    dateNow -= 24 * 60 * 60 * 1000;
-    i++;
-  }
-  prepData();
 }
 
 function prepData() {
