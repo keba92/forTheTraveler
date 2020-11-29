@@ -22,7 +22,9 @@ onmessage = (e) => {
 function fetchData(url) {
   fetch(url)
     .then((response) => response.json())
-    .then((data) => postMessage(JSON.stringify(dataPreparation(data, name))))
+    .then((data) => {
+      postMessage(JSON.stringify(dataPreparation(data, name)));
+    })
     .catch((error) => console.log(error));
 }
 
@@ -120,9 +122,11 @@ function newDate(cur, date) {
 }
 
 async function getCurrencyList() {
-  const response = await fetch('https://www.nbrb.by/api/exrates/currencies');
-  const currencyData = await response.json();
-  return currencyData;
+  try {
+    const response = await fetch('https://www.nbrb.by/api/exrates/currencies');
+    const currencyData = await response.json();
+    return currencyData;
+  } catch (error) { console.log(error); }
 }
 
 function filter(arr) {
@@ -138,6 +142,7 @@ function filter(arr) {
       endDate: el.Cur_DateEnd,
     });
   });
+  console.log(resultArr);
   return resultArr;
 }
 
@@ -152,7 +157,7 @@ async function correctID(date, cur) {
     for (const key in obj) {
       obj[key].forEach((elem) => {
         const elemDate = new Date(elem).getTime();
-        if (sdateInterval < elemDate && elemDate < edateInterval) {
+        if (sdateInterval <= elemDate && elemDate <= edateInterval) {
           arrDate.push(elem);
         }
       });
@@ -164,6 +169,7 @@ async function correctID(date, cur) {
 
 function getCurrencyData(id, start, end) {
   const url = `https://www.nbrb.by/API/ExRates/Rates/Dynamics/${id}?startDate=${start}&endDate=${end}`;
+  console.log(url);
   return fetch(url)
     .then((response) => response.json())
     .then((data) => {

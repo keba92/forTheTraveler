@@ -40,13 +40,18 @@ function pickMinDate() {
 
 function startAnalizCur() {
   if (selectAnaliz.value === '') {
-    spinnerPage.render();
-    myWorker.postMessage(JSON.stringify('get_cur_data'));
-    myWorker.onmessage = (e) => {
-      const data = JSON.parse(e.data);
-      createOptionsConvert(data, selectAnaliz);
-      setTimeout(spinnerPage.handleClear, 2000);
-    };
+    try {
+      myWorker.postMessage(JSON.stringify('get_cur_data'));
+      myWorker.onmessage = (e) => {
+        const data = JSON.parse(e.data);
+        sessionStorage.setItem('startAnalizCur', JSON.stringify(data));
+        createOptionsConvert(data, selectAnaliz);
+      };
+    } catch (error) {
+      const sessionData = sessionStorage.getItem('startAnalizCur');
+      const funData = JSON.parse(sessionData);
+      createOptionsConvert(funData, selectAnaliz);
+    }
   }
   startDate.setAttribute('max', today);
   endDate.setAttribute('max', today);
@@ -63,7 +68,7 @@ function showAnaliz() {
 
 function changeDateInput() {
   const intervalRates = document.querySelector('#choise_intervalRates').value;
-  if (intervalRates === '31') {
+  if (intervalRates === '30') {
     startDateRates.type = 'month';
     endDateRates.type = 'month';
   } else if (intervalRates === '365') {
@@ -142,6 +147,7 @@ function showAnalizRates() {
     myWorker.postMessage(JSON.stringify(objDate));
     myWorker.onmessage = async (e) => {
       const data = await JSON.parse(e.data);
+      console.log(data);
       const info = await correctData(data);
       const rates = await prepRates(info, intervalRates, dateStartRates, dateEndRates);
       await createGraf(rates);
@@ -159,7 +165,7 @@ async function prepRates(data, interval, start, end) {
   const res = data[1].map((el) => {
     const rates = [];
     if (interval !== '365') {
-      while (data[0].length >= interval) {
+      while (data[0].length > interval) {
         arrDates.push(data[0][interval - 1]);
         const newArr = el.data.slice(0, interval);
         const result = newArr.reduce((sum, current) => (sum + current), 0);
@@ -167,7 +173,7 @@ async function prepRates(data, interval, start, end) {
         data[0].splice(0, interval);
         el.data.splice(0, interval);
       }
-      if (interval === '31') {
+      if (interval === '30') {
         newDate = arrDates.map((elem) => {
           const day = new Date(elem);
           const optionDate = { year: 'numeric', month: 'long' };
@@ -198,7 +204,7 @@ async function prepRates(data, interval, start, end) {
       return [arrDates, res];
     case '7':
       return [arrDates, res];
-    case '31':
+    case '30':
       return [newDate, res];
     case '365':
       return [arrYears, res];
@@ -227,6 +233,9 @@ async function correctData(data) {
       const idx = dates.indexOf(el);
       arrReturn[idx] = data[key].resultArr[index];
     });
+    for (let i = 0; i < arrReturn.length; i++) {
+      if (!arrReturn[i]) arrReturn[i] = 0;
+    }
     resultCur.push({
       turboThreshold: dates.length + 1000,
       name: key,
