@@ -142,7 +142,6 @@ function filter(arr) {
       endDate: el.Cur_DateEnd,
     });
   });
-  console.log(resultArr);
   return resultArr;
 }
 
@@ -169,7 +168,6 @@ async function correctID(date, cur) {
 
 function getCurrencyData(id, start, end) {
   const url = `https://www.nbrb.by/API/ExRates/Rates/Dynamics/${id}?startDate=${start}&endDate=${end}`;
-  console.log(url);
   return fetch(url)
     .then((response) => response.json())
     .then((data) => {
