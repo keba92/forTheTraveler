@@ -57,6 +57,19 @@ function startAnalizCur() {
   endDate.setAttribute('max', today);
 }
 
+function choiseInterval() {
+  const selectInterval = document.querySelector('#choise_interval').value;
+  let dateNow = Date.now();
+  let i = 0;
+  dates = [];
+  while (i < selectInterval) {
+    dates.unshift(new Date(dateNow).toISOString().substr(0, 10));
+    dateNow -= 24 * 60 * 60 * 1000;
+    i++;
+  }
+  prepData();
+}
+
 function showAnaliz() {
   if (startDate.value && endDate.value) {
     rangeDate(startDate.value, endDate.value);
@@ -68,7 +81,7 @@ function showAnaliz() {
 
 function changeDateInput() {
   const intervalRates = document.querySelector('#choise_intervalRates').value;
-  if (intervalRates === '30') {
+  if (intervalRates === '28') {
     startDateRates.type = 'month';
     endDateRates.type = 'month';
   } else if (intervalRates === '365') {
@@ -136,7 +149,6 @@ function showAnalizRates() {
     myWorker.postMessage(JSON.stringify(objDate));
     myWorker.onmessage = async (e) => {
       const data = await JSON.parse(e.data);
-      console.log(data);
       const info = await correctData(data);
       const rates = await prepRates(info, intervalRates, dateStartRates, dateEndRates);
       await createGraf(rates);
@@ -153,7 +165,7 @@ async function prepRates(data, interval, start, end) {
   let newDate = [];
   const res = data[1].map((el) => {
     const rates = [];
-    if (interval !== '365') {
+    if (interval !== '365' && interval !== '28') {
       while (data[0].length > interval) {
         arrDates.push(data[0][interval - 1]);
         const newArr = el.data.slice(0, interval);
@@ -162,28 +174,51 @@ async function prepRates(data, interval, start, end) {
         data[0].splice(0, interval);
         el.data.splice(0, interval);
       }
-      if (interval === '30') {
-        newDate = arrDates.map((elem) => {
-          const day = new Date(elem);
-          const optionDate = { year: 'numeric', month: 'long' };
-          return day.toLocaleString('ru-RU', optionDate);
-        });
-        return { name: el.name, data: rates };
-      // eslint-disable-next-line no-else-return
-      } else {
-        return { name: el.name, data: rates };
-      }
-    } else {
-      while (el.data.length >= interval) {
-        const newArr = el.data.slice(0, interval);
+      return { name: el.name, data: rates };
+    } else if (interval === '28') {
+      while (data[0].length >= interval) {
+        const year = dates[0].slice(0, 4);
+        const mounth = dates[0].slice(6, 7);
+        const newInterval = new Date(year, mounth, 0).getDate();
+        arrDates.push(data[0][newInterval - 1]);
+        const newArr = el.data.slice(0, newInterval);
         const result = newArr.reduce((sum, current) => (sum + current), 0);
-        rates.push(Number((result / interval).toFixed(3)));
-        el.data.splice(0, interval);
+        rates.push(Number((result / newInterval).toFixed(3)));
+        data[0].splice(0, newInterval);
+        el.data.splice(0, newInterval);
       }
+      newDate = arrDates.map((elem) => {
+        const day = new Date(elem);
+        const optionDate = { year: 'numeric', month: 'long' };
+        return day.toLocaleString('ru-RU', optionDate);
+      });
+      return { name: el.name, data: rates };
+      // eslint-disable-next-line no-else-return
+    } else {
       let i = Number(start);
       while (i <= Number(end)) {
         arrYears.push(i);
         i += 1;
+      }
+      let j = 0;
+      while (j < arrYears.length) {
+        const sdate = new Date(`${arrYears[j]}-01-01`);
+        const edate = new Date(`${arrYears[j]}-12-31`);
+        // eslint-disable-next-line max-len
+        const newInterval = Math.round((Date.parse(edate) - Date.parse(sdate)) / (1000 * 60 * 60 * 24)) + 1;
+        if (newInterval > el.data.length) {
+          const newArr = el.data.slice(0, el.data.length);
+          const result = newArr.reduce((sum, current) => (sum + current), 0);
+          rates.push(Number((result / el.data.length).toFixed(3)));
+          el.data.splice(0, el.data.length);
+          j++;
+        } else {
+          const newArr = el.data.slice(0, newInterval);
+          const result = newArr.reduce((sum, current) => (sum + current), 0);
+          rates.push(Number((result / newInterval).toFixed(3)));
+          el.data.splice(0, newInterval);
+          j++;
+        }
       }
       return { name: el.name, data: rates };
     }
@@ -193,7 +228,7 @@ async function prepRates(data, interval, start, end) {
       return [arrDates, res];
     case '7':
       return [arrDates, res];
-    case '30':
+    case '28':
       return [newDate, res];
     case '365':
       return [arrYears, res];
@@ -226,7 +261,7 @@ async function correctData(data) {
       if (!arrReturn[i]) arrReturn[i] = 0;
     }
     resultCur.push({
-      turboThreshold: dates.length + 1000,
+      turboThreshold: dates.length,
       name: key,
       data: arrReturn
     });
