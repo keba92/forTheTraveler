@@ -142,6 +142,8 @@ function showAnalizRates() {
   if (dateStartRates && dateEndRates && intervalRates) {
     if (dateEndRates.length === 4) {
       rangeDate(`${dateStartRates}-01-01`, `${dateEndRates}-12-31`);
+    } else if (intervalRates === '28') {
+      rangeDate(`${dateStartRates}-01`, `${dateEndRates}-31`);
     } else {
       rangeDate(dateStartRates, dateEndRates);
     }
@@ -184,12 +186,21 @@ async function prepRates(data, interval, start, end) {
         const year = dates[0].slice(0, 4);
         const mounth = dates[0].slice(6, 7);
         const newInterval = new Date(year, mounth, 0).getDate();
-        arrDates.push(data[0][newInterval - 1]);
-        const newArr = el.data.slice(0, newInterval);
-        const result = newArr.reduce((sum, current) => (sum + current), 0);
-        rates.push(Number((result / newInterval).toFixed(3)));
-        data[0].splice(0, newInterval);
-        el.data.splice(0, newInterval);
+        if (el.data.length < newInterval * 2 - 1) {
+          arrDates.push(data[0][newInterval - 2]);
+          const newArr = el.data.slice(0, newInterval);
+          const result = newArr.reduce((sum, current) => (sum + current), 0);
+          rates.push(Number((result / newInterval).toFixed(3)));
+          data[0].splice(0, newInterval);
+          el.data.splice(0, newInterval);
+        } else {
+          arrDates.push(data[0][newInterval - 1]);
+          const newArr = el.data.slice(0, newInterval);
+          const result = newArr.reduce((sum, current) => (sum + current), 0);
+          rates.push(Number((result / newInterval).toFixed(3)));
+          data[0].splice(0, newInterval);
+          el.data.splice(0, newInterval);
+        }
       }
       newDate = arrDates.map((elem) => {
         const day = new Date(elem);
