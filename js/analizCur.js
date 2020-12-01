@@ -140,7 +140,11 @@ function showAnalizRates() {
   const dateStartRates = document.querySelector('#startDateRates').value;
   const dateEndRates = document.querySelector('#endDateRates').value;
   if (dateStartRates && dateEndRates && intervalRates) {
-    rangeDate(dateStartRates, dateEndRates);
+    if (dateEndRates.length === 4) {
+      rangeDate(`${dateStartRates}-01-01`, `${dateEndRates}-12-31`);
+    } else {
+      rangeDate(dateStartRates, dateEndRates);
+    }
     const objDate = {
       current: arrVal,
       date: dates
