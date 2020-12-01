@@ -5,6 +5,12 @@ The format is based on forthetraveler.netlify.app(https://keepachangelog.com/en/
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [0.8.4] - 2020-12-01
+### Changed
+
+- Corrected output of average exchange rate data by months.
+
+
 ## [0.8.3] - 2020-12-01
 ### Changed
 
