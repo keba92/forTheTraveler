@@ -16,9 +16,11 @@ function startConvert() {
 function createOptionsConvert(optData, select) {
   // eslint-disable-next-line max-len
   const unique = optData.filter(((set) => (el) => !set.has(el.Cur_Abbreviation) && set.add(el.Cur_Abbreviation))(new Set()));
-  unique.forEach((el) => {
-    if (el.Cur_Abbreviation === 'USD' || el.Cur_Abbreviation === 'EUR') {
-      unique.unshift(el);
+  unique.sort((el) => {
+    if (el.Cur_Abbreviation === 'USD') {
+      unique[0] = el;
+    } else if (el.Cur_Abbreviation === 'EUR') {
+      unique[1] = el;
     }
   });
   unique.map((el) => {
