@@ -16,7 +16,12 @@ function startConvert() {
 function createOptionsConvert(optData, select) {
   // eslint-disable-next-line max-len
   const unique = optData.filter(((set) => (el) => !set.has(el.Cur_Abbreviation) && set.add(el.Cur_Abbreviation))(new Set()));
-  unique.map((el) => {
+  const newUniq = unique.map((el) => {
+    if (el.Cur_Abbreviation === 'USD' || el.Cur_Abbreviation === 'EUR') {
+      unique.unshift(el);
+    }
+  });
+  newUniq.map((el) => {
     const option = document.createElement('option');
     option.text = el.Cur_Name;
     option.value = el.Cur_Abbreviation;
